@@ -1,0 +1,35 @@
+name: Development Workflow
+
+on:
+  push:
+    branches:
+      - development
+  pull_request:
+    types:
+      - closed
+
+jobs:
+  run-script-on-push:
+    name: Run script1.sh on push to development
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout Code
+        uses: actions/checkout@v3
+
+      - name: Run Script 1
+        run: |
+          chmod +x script1.sh
+          ./script1.sh
+
+  run-script-on-merge:
+    name: Run script2.sh after merge
+    if: github.event.pull_request.merged == true
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout Code
+        uses: actions/checkout@v3
+
+      - name: Run Script 2
+        run: |
+          chmod +x script2.sh
+          ./script2.sh
